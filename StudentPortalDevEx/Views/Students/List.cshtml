@@ -1,1 +1,42 @@
-﻿
+﻿@model List<StudentPortalDevEx.Models.Entities.Student>
+@using StudentPortalDevEx.Models.Entities
+@using DevExtreme.AspNet.Mvc
+
+<h1 class="mt-4 mb-3 text-center text-primary">Students</h1>
+
+@(Html.DevExtreme().DataGrid<Student>()
+    .ID("studentsGrid")
+    .DataSource(Model) 
+    .ShowBorders(true)
+    .Paging(p => p.PageSize(10))
+    .Pager(p => p
+        .ShowPageSizeSelector(true)
+        .AllowedPageSizes(new[] { 5, 10, 20 })
+        .ShowInfo(true)
+    )
+    .FilterRow(f => f.Visible(true))
+    .HeaderFilter(f => f.Visible(true))
+    .SearchPanel(sp => sp.Visible(true).Width(250).Placeholder("Search..."))
+    .Columns(columns =>
+    {
+        columns.AddFor(s => s.Id).Visible(false);
+
+        columns.AddFor(s => s.Name).Caption("Name");
+
+        columns.AddFor(s => s.Email).Caption("Email");
+
+        columns.Add()
+            .Caption("Actions")
+            .AllowFiltering(false)
+            .AllowSorting(false)
+            .CellTemplate(@<text>
+                               <a href="/Students/Edit/<%- Id %>" class="btn btn-sm btn-outline-primary">Edit</a>
+                           </text>);
+    })
+    .Export(e => e.Enabled(true).AllowExportSelectedData(true))
+    .Toolbar(t => t.Items(i =>
+    {
+        i.Add().Name("exportButton");
+        i.Add().Name("searchPanel");
+    }))
+)

@@ -62,7 +62,7 @@ namespace StudentPortalDevEx.Web.Controllers
             await dbContext.Students.AddAsync(student);
             await dbContext.SaveChangesAsync();
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Index","Home");
         }
 
         // ✅ GET: Students/List (for legacy jQuery DataTable version)
@@ -101,7 +101,7 @@ namespace StudentPortalDevEx.Web.Controllers
                 await dbContext.SaveChangesAsync();
             }
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Index,Home");
         }
 
         // ✅ POST: Students/Delete
@@ -118,7 +118,7 @@ namespace StudentPortalDevEx.Web.Controllers
                 await dbContext.SaveChangesAsync();
             }
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Index,Home");
         }
     }
 }
