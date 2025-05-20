@@ -1,7 +1,10 @@
+@model List<StudentPortalDevEx.Models.Entities.Student>
+
 @using StudentPortalDevEx.Models
 
-<h2>Home</h2>
+<h2 class="text-primary">Home</h2>
 
+<!-- Existing SampleOrder Grid -->
 @(Html.DevExtreme().DataGrid<SampleOrder>()
     .ShowBorders(true)
     .DataSource(d => d.Mvc().Controller("SampleData").LoadAction("Get").Key("OrderID"))
@@ -26,4 +29,49 @@
             groupItems.Add().SummaryType(SummaryType.Count);
         })
     )
+)
+
+<hr />
+
+<h2 class="text-success">Students List</h2>
+
+<!-- Fixed DevExtreme Student Grid -->
+@(Html.DevExtreme().DataGrid<StudentPortalDevEx.Models.Entities.Student>()
+    .ID("studentsGrid")
+    .DataSource(Model)
+    .Key("Id")
+    .ShowBorders(true)
+    .Paging(p => p.PageSize(10))
+    .Pager(p => p
+        .ShowPageSizeSelector(true)
+        .AllowedPageSizes(new[] { 5, 10, 20 })
+        .ShowInfo(true)
+    )
+    .FilterRow(f => f.Visible(true))
+    .HeaderFilter(f => f.Visible(true))
+    .Columns(columns =>
+    {
+        columns.AddFor(s => s.Id)
+            .Visible(false);
+
+        columns.AddFor(s => s.Name)
+            .Caption("Name");
+
+        columns.AddFor(s => s.Email)
+            .Caption("Email");
+
+        columns.AddFor(s => s.Phone)
+            .Caption("Phone");
+
+        columns.AddFor(s => s.Subscribed)
+            .Caption("Subscribed");
+
+        columns.Add()
+            .Caption("Actions")
+            .AllowFiltering(false)
+            .AllowSorting(false)
+            .CellTemplate(@<text>
+                <a href="/Students/Edit/<%- Id %>" class="btn btn-sm btn-outline-primary">Edit</a>
+            </text>);
+    })
 )

@@ -1,0 +1,52 @@
+﻿@model StudentPortalDevEx.Models.Entities.Student
+
+<div class="container mt-5">
+    <h2 class="mb-4">Edit Student</h2>
+
+    @if (Model == null)
+    {
+        <p>No Student was found with this Id</p>
+    }
+    else
+    {
+        <form method="post" asp-action="Edit">
+            @(Html.DevExtreme().Form()
+                    .ID("editStudentForm")
+                    .ColCount(1)
+                    .FormData(Model)
+                    .LabelMode(FormLabelMode.Floating)
+                    .Items(items =>
+                    {
+                        items.AddSimple()
+                    .DataField(nameof(Model.Id))
+                    .Editor(e => e.TextBox().ReadOnly(true));
+
+                        items.AddSimple()
+                    .DataField(nameof(Model.Name))
+                    .Editor(e => e.TextBox()
+                    .Placeholder("Enter your name"));
+
+                        items.AddSimple()
+                    .DataField(nameof(Model.Email))
+                    .Editor(e => e.TextBox()
+                    .Mode(TextBoxMode.Email)
+                    .Placeholder("Enter your email"));
+
+                        items.AddSimple()
+                    .DataField(nameof(Model.Phone))
+                    .Editor(e => e.TextBox()
+                    .Mode(TextBoxMode.Tel)
+                    .Placeholder("Enter your phone number"));
+
+                        items.AddSimple()
+                    .DataField(nameof(Model.Subscribed))
+                    .Editor(e => e.CheckBox().Text("Subscribe"));
+                    })
+                    )
+
+        <br />
+        <button type="submit" class="btn btn-success">Save</button>
+        <button type="submit" asp-action="Delete" asp-controller="Students" class="btn btn-danger ms-3">Delete</button>
+    </form>
+        }
+</div>

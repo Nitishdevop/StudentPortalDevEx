@@ -1,0 +1,43 @@
+﻿@model StudentPortalDevEx.Models.AddStudentViewModel
+
+<div class="container mt-5">
+    <h2 class="mb-4">Add Student</h2>
+
+    <form method="post" asp-action="AddStudent">
+        @(Html.DevExtreme().Form()
+                .ID("addStudentForm")
+                .ColCount(1)
+                .FormData(Model)
+                .LabelMode(FormLabelMode.Floating)
+                .Items(items =>
+                {
+                    items.AddSimple()
+                    .DataField(nameof(Model.Name))
+                    .Editor(e => e.TextBox()
+                    .Placeholder("Enter your name")
+                    );
+
+                    items.AddSimple()
+                    .DataField(nameof(Model.Email))
+                    .Editor(e => e.TextBox()
+                    .Mode(TextBoxMode.Email)
+                    .Placeholder("Enter your email")
+                    );
+
+                    items.AddSimple()
+                    .DataField(nameof(Model.Phone))
+                    .Editor(e => e.TextBox()
+                    .Mode(TextBoxMode.Tel)
+                    .Placeholder("Enter your phone number")
+                    );
+
+                    items.AddSimple()
+                    .DataField(nameof(Model.Subscribed))
+                    .Editor(e => e.CheckBox().Text("Subscribe"));
+                })
+                )
+
+        <br />
+        <button type="submit" class="btn btn-success">Save</button>
+    </form>
+</div>
