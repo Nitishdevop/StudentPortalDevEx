@@ -62,7 +62,7 @@ namespace StudentPortalDevEx.Web.Controllers
             await dbContext.Students.AddAsync(student);
             await dbContext.SaveChangesAsync();
 
-            return RedirectToAction("Index","Home");
+            return RedirectToAction("Index", "Home");
         }
 
         // ✅ GET: Students/List (for legacy jQuery DataTable version)
@@ -90,6 +90,9 @@ namespace StudentPortalDevEx.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(Student viewModel)
         {
+            // 🔍 Log to confirm method is hit and ID is passed
+            Console.WriteLine("Editing student: " + viewModel.Id);
+
             var student = await dbContext.Students.FindAsync(viewModel.Id);
             if (student != null)
             {
@@ -101,7 +104,8 @@ namespace StudentPortalDevEx.Web.Controllers
                 await dbContext.SaveChangesAsync();
             }
 
-            return RedirectToAction("Index,Home");
+            return RedirectToAction("Index", "Students");
+
         }
 
         // ✅ POST: Students/Delete
@@ -118,7 +122,8 @@ namespace StudentPortalDevEx.Web.Controllers
                 await dbContext.SaveChangesAsync();
             }
 
-            return RedirectToAction("Index,Home");
+            return RedirectToAction("Index", "Students");
+
         }
     }
 }

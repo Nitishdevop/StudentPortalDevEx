@@ -9,7 +9,10 @@
     }
     else
     {
-        <form method="post" asp-action="Edit">
+        <form method="post" asp-action="Edit ">
+            <!-- ✅ Hidden input to post ID -->
+            <input type="hidden" name="Id" value="@Model.Id" />
+
             @(Html.DevExtreme().Form()
                     .ID("editStudentForm")
                     .ColCount(1)
@@ -45,7 +48,7 @@
                     )
 
         <br />
-        <button type="submit" class="btn btn-success">Save</button>
+        <button type="submit" class="btn btn-warning">Save</button>
         <button type="submit" asp-action="Delete" asp-controller="Students" class="btn btn-danger ms-3">Delete</button>
     </form>
         }

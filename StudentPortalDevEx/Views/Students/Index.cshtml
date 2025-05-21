@@ -1,15 +1,13 @@
 ﻿@model List<StudentPortalDevEx.Models.Entities.Student>
 
-@using StudentPortalDevEx.Models.Entities
 @using DevExtreme.AspNet.Mvc
 @using DevExtreme.AspNet.Mvc.Builders
 
 <h2 class="text-success">Students List</h2>
 
-<!-- ✅ DevExtreme Student Grid -->
-@(Html.DevExtreme().DataGrid<Student>()
+@(Html.DevExtreme().DataGrid<StudentPortalDevEx.Models.Entities.Student>()
     .ID("studentsGrid")
-    .DataSource(Model) 
+    .DataSource(Model)
     .ShowBorders(true)
     .Paging(p => p.PageSize(10))
     .Pager(p => p
@@ -22,7 +20,8 @@
     .Columns(columns =>
     {
         columns.AddFor(s => s.Id)
-            .Visible(false);
+            .Caption("ID")
+            .Visible(false); // required for template use
 
         columns.AddFor(s => s.Name)
             .Caption("Name");
@@ -41,7 +40,11 @@
             .AllowFiltering(false)
             .AllowSorting(false)
             .CellTemplate(@<text>
-                               <a href="/Students/Edit/<%- Id %>" class="btn btn-sm btn-outline-primary">Edit</a>
+                               <a href="/Students/Edit/<%- data.Id %>" class="btn btn-sm btn-outline-primary me-2">Edit</a>
+                               <form method="post" action="/Students/Delete" style="display:inline;">
+                                   <input type="hidden" name="Id" value="<%- data.Id %>" />
+                                   <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Are you sure?')">Delete</button>
+                               </form>
                            </text>);
     })
 )
